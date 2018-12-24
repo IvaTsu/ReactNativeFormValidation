@@ -1,0 +1,3 @@
+rootProject.name = 'ReactNativeFormValidation'
+
+include ':app'
