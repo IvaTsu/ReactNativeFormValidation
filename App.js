@@ -7,30 +7,27 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NativeRouter, Route, Link } from 'react-router-native';
 
-const Home = () => <Text style={styles.header}>Home</Text>;
-const About = () => <Text style={styles.header}>About</Text>;
-const Topic = ({ match }) => <Text style={styles.topic}>{match.params.topicId}</Text>;
+import OneFieldForm from './src/forms/OneFieldForm/index';
+import SignIn from './src/forms/SignIn';
 
-const Topics = ({ match }) => (
+const Forms = ({ match }) => (
 	<View>
-		<Text style={styles.header}>Topics</Text>
+		<Text style={styles.header}>Forms</Text>
 		<View>
-			<Link to={`${match.url}/rendering`} style={styles.subNavItem} underlayColor="#f0f4f7">
-				<Text>Rendering with React</Text>
+			<Link to={`${match.url}/one-field-form`} style={styles.subNavItem} underlayColor="#f0f4f7">
+				<Text style={styles.item}>A form with one text field</Text>
 			</Link>
-			<Link to={`${match.url}/components`} style={styles.subNavItem} underlayColor="#f0f4f7">
-				<Text>Components</Text>
-			</Link>
-			<Link to={`${match.url}/props-v-state`} style={styles.subNavItem} underlayColor="#f0f4f7">
-				<Text>Props v. State</Text>
+			<Link to={`${match.url}/sign-in-form`} style={styles.subNavItem} underlayColor="#f0f4f7">
+				<Text style={styles.item}>A "Sign in" form</Text>
 			</Link>
 		</View>
 
-		<Route path={`${match.path}/:topicId`} component={Topic} />
+		<Route path={`${match.path}/one-field-form`} component={OneFieldForm} />
+		<Route path={`${match.path}/sign-in-form`} component={SignIn} />
 		<Route
 			exact
 			path={match.path}
-			render={() => <Text style={styles.topic}>Please select a topic.</Text>}
+			render={() => <Text style={styles.form}>Please select a form.</Text>}
 		/>
 	</View>
 );
@@ -38,21 +35,7 @@ const Topics = ({ match }) => (
 const App = () => (
 	<NativeRouter>
 		<View style={styles.container}>
-			<View style={styles.nav}>
-				<Link to="/" underlayColor="#f0f4f7" style={styles.navItem}>
-					<Text>Home</Text>
-				</Link>
-				<Link to="/about" underlayColor="#f0f4f7" style={styles.navItem}>
-					<Text>About</Text>
-				</Link>
-				<Link to="/topics" underlayColor="#f0f4f7" style={styles.navItem}>
-					<Text>Topics</Text>
-				</Link>
-			</View>
-
-			<Route exact path="/" component={Home} />
-			<Route path="/about" component={About} />
-			<Route path="/topics" component={Topics} />
+			<Route path="/" component={Forms} />
 		</View>
 	</NativeRouter>
 );
@@ -63,23 +46,19 @@ const styles = StyleSheet.create({
 		padding: 10
 	},
 	header: {
-		fontSize: 20
+		marginVertical: 20,
+		fontSize: 20,
+		textAlign: 'center'
 	},
-	nav: {
-		flexDirection: 'row',
-		justifyContent: 'space-around'
+	item: {
+		fontSize: 16
 	},
-	navItem: {
-		flex: 1,
-		alignItems: 'center',
-		padding: 10
+	form: {
+		textAlign: 'center',
+		fontSize: 15
 	},
 	subNavItem: {
 		padding: 5
-	},
-	topic: {
-		textAlign: 'center',
-		fontSize: 15
 	}
 });
 
