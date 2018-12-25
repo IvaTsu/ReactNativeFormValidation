@@ -9,9 +9,16 @@ import {
   SafeAreaView,
   TextInput,
   Button,
-  ActivityIndicator
+  ActivityIndicator,
+  Text
 } from "react-native";
 import { Formik } from "formik";
+import * as yup from "yup";
+import { red } from "ansi-colors";
+
+const validationSchema = yup.object().shape({
+  name: yup.string().required("Required")
+});
 
 export default () => (
   <SafeAreaView>
@@ -25,6 +32,7 @@ export default () => (
         }, 1000);
         alert(JSON.stringify(values));
       }}
+      validationSchema={validationSchema}
     >
       {formikProps => (
         <Fragment>
@@ -32,6 +40,7 @@ export default () => (
             style={{ borderWidth: 2, margin: 10, padding: 5 }}
             onChangeText={formikProps.handleChange("name")}
           />
+          <Text style={{ color: "red" }}>{formikProps.errors.name}</Text>
           {formikProps.isSubmitting ? (
             <ActivityIndicator />
           ) : (
