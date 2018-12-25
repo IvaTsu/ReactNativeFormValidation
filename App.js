@@ -8,6 +8,8 @@ import { SafeAreaView, TextInput, Button, ActivityIndicator, Text } from 'react-
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
+import SignIn from './src/forms/SignIn';
+
 const validationSchema = yup.object().shape({
 	name: yup.string().required('Required')
 });
@@ -41,5 +43,6 @@ export default () => (
 				</Fragment>
 			)}
 		</Formik>
+		<SignIn />
 	</SafeAreaView>
 );
