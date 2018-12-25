@@ -17,7 +17,9 @@ export default () => (
   <SafeAreaView>
     <Formik
       initialValues={{ name: "" }}
+      // actions should be Formik functions to change state of formikProps
       onSubmit={(values, actions) => {
+        // setTimeout just for latency
         setTimeout(() => {
           actions.setSubmitting(false);
         }, 1000);
