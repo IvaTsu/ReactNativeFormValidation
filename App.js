@@ -3,19 +3,40 @@
  * @flow
  */
 
-import React, { Component } from "react";
-import { StyleSheet, SafeAreaView, Button } from "react-native";
+import React, { Component, Fragment } from "react";
+import {
+  StyleSheet,
+  SafeAreaView,
+  TextInput,
+  Button,
+  ActivityIndicator
+} from "react-native";
+import { Formik } from "formik";
 
-type Props = {};
-
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <SafeAreaView>
-        <Button title="Submit" />
-      </SafeAreaView>
-    );
-  }
-}
-
-const styles = StyleSheet.create({});
+export default () => (
+  <SafeAreaView>
+    <Formik
+      initialValues={{ name: "" }}
+      onSubmit={(values, actions) => {
+        setTimeout(() => {
+          actions.setSubmitting(false);
+        }, 1000);
+        alert(JSON.stringify(values));
+      }}
+    >
+      {formikProps => (
+        <Fragment>
+          <TextInput
+            style={{ borderWidth: 2, margin: 10, padding: 5 }}
+            onChangeText={formikProps.handleChange("name")}
+          />
+          {formikProps.isSubmitting ? (
+            <ActivityIndicator />
+          ) : (
+            <Button title="Submit" onPress={formikProps.handleSubmit} />
+          )}
+        </Fragment>
+      )}
+    </Formik>
+  </SafeAreaView>
+);
