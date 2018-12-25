@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { SafeAreaView, TextInput, Button, ActivityIndicator, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, TextInput, Button, ActivityIndicator, Text } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -24,11 +24,11 @@ export default () => (
 			{formikProps => (
 				<Fragment>
 					<TextInput
-						style={{ borderWidth: 2, margin: 10, padding: 5 }}
+						style={styles.inputField}
 						onChangeText={formikProps.handleChange('name')}
 						onBlur={formikProps.handleBlur('name')}
 					/>
-					<Text style={{ color: 'red' }}>{formikProps.errors.name}</Text>
+					<Text style={styles.errorText}>{formikProps.errors.name}</Text>
 					{formikProps.isSubmitting ? (
 						<ActivityIndicator />
 					) : (
@@ -39,3 +39,14 @@ export default () => (
 		</Formik>
 	</SafeAreaView>
 );
+
+const styles = StyleSheet.create({
+	inputField: {
+		borderWidth: 2,
+		margin: 10,
+		padding: 5
+	},
+	errorText: {
+		color: 'red'
+	}
+});
