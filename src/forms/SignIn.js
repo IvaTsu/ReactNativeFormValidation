@@ -1,5 +1,13 @@
 import React, { Fragment } from 'react';
-import { StyleSheet, SafeAreaView, ActivityIndicator, TextInput, Text, Button } from 'react-native';
+import {
+	StyleSheet,
+	SafeAreaView,
+	ActivityIndicator,
+	View,
+	TextInput,
+	Text,
+	Button
+} from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -30,23 +38,38 @@ export default () => (
 		>
 			{formikProps => (
 				<Fragment>
-					<Text accessibilityLabel="Email">Email</Text>
-					<TextInput
-						style={styles.inputField}
-						onChangeText={formikProps.handleChange('email')}
-						onBlur={formikProps.handleBlur('email')}
-					/>
-					<Text style={styles.errorText}>{formikProps.errors.email}</Text>
+					<View style={styles.formItem}>
+						<Text accessibilityLabel="Email">Email</Text>
+						<TextInput
+							style={styles.inputField}
+							placeholder="email@example.com"
+							onChangeText={formikProps.handleChange('email')}
+							onBlur={formikProps.handleBlur('email')}
+							autoFocus
+						/>
+						<Text style={styles.errorText}>
+							{formikProps.touched.email && formikProps.errors.email}
+						</Text>
+					</View>
 
-					<Text accessibilityLabel="Password">Password</Text>
-					<TextInput
-						style={styles.inputField}
-						onChangeText={formikProps.handleChange('password')}
-						onBlur={formikProps.handleBlur('password')}
-					/>
-					<Text style={styles.errorText}>{formikProps.errors.password}</Text>
-
-					<Button title="Sign In" onPress={formikProps.handleSubmit} />
+					<View style={styles.formItem}>
+						<Text accessibilityLabel="Password">Password</Text>
+						<TextInput
+							style={styles.inputField}
+							placeholder="password"
+							onChangeText={formikProps.handleChange('password')}
+							onBlur={formikProps.handleBlur('password')}
+							secureTextEntry
+						/>
+						<Text style={styles.errorText}>
+							{formikProps.touched.password && formikProps.errors.password}
+						</Text>
+					</View>
+					{formikProps.isSubmitting ? (
+						<ActivityIndicator />
+					) : (
+						<Button title="Sign In" onPress={formikProps.handleSubmit} />
+					)}
 				</Fragment>
 			)}
 		</Formik>
@@ -58,6 +81,10 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		margin: 10,
 		padding: 5
+	},
+	formItem: {
+		marginHorizontal: 20,
+		marginVertical: 5
 	},
 	errorText: {
 		color: 'red'
