@@ -1,10 +1,22 @@
 import React, { Fragment } from 'react';
-import { StyleSheet, SafeAreaView, TextInput, Button, ActivityIndicator, Text } from 'react-native';
+import {
+	StyleSheet,
+	SafeAreaView,
+	TextInput,
+	Button,
+	ActivityIndicator,
+	View,
+	Text
+} from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
 const validationSchema = yup.object().shape({
-	name: yup.string().required('Required')
+	name: yup
+		.string()
+		.label('First Name')
+		.required()
+		.min(2, 'At least 2 characters')
 });
 
 export default () => (
@@ -23,12 +35,23 @@ export default () => (
 		>
 			{formikProps => (
 				<Fragment>
-					<TextInput
-						style={styles.inputField}
-						onChangeText={formikProps.handleChange('name')}
-						onBlur={formikProps.handleBlur('name')}
-					/>
-					<Text style={styles.errorText}>{formikProps.errors.name}</Text>
+					<View style={styles.formItem}>
+						<Text accessibilityLabel="Name">First Name</Text>
+						<TextInput
+							onChangeText={formikProps.handleChange('name')}
+							onBlur={formikProps.handleBlur('name')}
+							style={
+								formikProps.touched.name && formikProps.errors.name
+									? styles.inputFieldError
+									: styles.inputField
+							}
+							placeholder="John"
+							autoFocus
+						/>
+						<Text style={styles.errorText}>
+							{formikProps.touched.name && formikProps.errors.name}
+						</Text>
+					</View>
 					{formikProps.isSubmitting ? (
 						<ActivityIndicator />
 					) : (
@@ -45,6 +68,16 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		margin: 10,
 		padding: 5
+	},
+	formItem: {
+		marginHorizontal: 20,
+		marginVertical: 5
+	},
+	inputFieldError: {
+		borderWidth: 2,
+		margin: 10,
+		padding: 5,
+		borderColor: 'red'
 	},
 	errorText: {
 		color: 'red'
