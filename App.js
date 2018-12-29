@@ -9,6 +9,7 @@ import { NativeRouter, Route, Link } from 'react-router-native';
 
 import OneFieldForm from './src/forms/OneFieldForm/index';
 import SignIn from './src/forms/SignIn';
+import styles from './styles';
 
 const Forms = ({ match }) => (
 	<View>
@@ -39,27 +40,5 @@ const App = () => (
 		</View>
 	</NativeRouter>
 );
-
-const styles = StyleSheet.create({
-	container: {
-		marginTop: 25,
-		padding: 10
-	},
-	header: {
-		marginVertical: 20,
-		fontSize: 20,
-		textAlign: 'center'
-	},
-	item: {
-		fontSize: 16
-	},
-	form: {
-		textAlign: 'center',
-		fontSize: 15
-	},
-	subNavItem: {
-		padding: 5
-	}
-});
 
 export default App;
