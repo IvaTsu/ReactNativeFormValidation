@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+const DarkOliveGreen = '#556B2F';
+
 export default StyleSheet.create({
 	container: {
 		marginTop: 25,
@@ -9,16 +11,23 @@ export default StyleSheet.create({
 		marginVertical: 20,
 		fontSize: 24,
 		textAlign: 'center',
-		color: 'red'
+		color: DarkOliveGreen
+	},
+	subNavItem: {
+		margin: 2,
+		padding: 5,
+		backgroundColor: DarkOliveGreen
 	},
 	item: {
-		fontSize: 16
+		color: 'white',
+		fontSize: 18,
+		fontWeight: '600'
 	},
 	form: {
 		textAlign: 'center',
 		fontSize: 15
 	},
-	subNavItem: {
-		padding: 5
+	matchedRoute: {
+		backgroundColor: 'red'
 	}
 });
