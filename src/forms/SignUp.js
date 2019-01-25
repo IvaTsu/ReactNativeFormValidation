@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { SafeAreaView, ActivityIndicator, Button } from 'react-native';
+import { SafeAreaView, ActivityIndicator, Button, Text } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -29,6 +29,17 @@ const validateSchema = yup.object().shape({
 		.test('is-true', 'Must agree with Terms', value => value === true)
 });
 
+const signUp = ({ email }) => {
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			if (email === 'a@a.com') {
+				reject(new Error('Fake email'));
+			}
+			resolve(true);
+		}, 1000);
+	});
+};
+
 export default () => (
 	<SafeAreaView>
 		<Formik
@@ -39,10 +50,10 @@ export default () => (
 				agreeToTermsAndConditions: false
 			}}
 			onSubmit={(values, actions) => {
-				alert(JSON.stringify(values));
-				setTimeout(() => {
-					actions.setSubmitting(false);
-				}, 1000);
+				signUp({ email: values.email })
+					.then(() => alert(JSON.stringify(values)))
+					.catch(error => actions.setFieldError('general', error.message))
+					.finally(() => actions.setSubmitting(false));
 			}}
 			validationSchema={validateSchema}
 		>
@@ -81,7 +92,12 @@ export default () => (
 					{formikProps.isSubmitting ? (
 						<ActivityIndicator />
 					) : (
-						<Button title="Sign Up" onPress={formikProps.handleSubmit} />
+						<Fragment>
+							<Button title="Sign Up" onPress={formikProps.handleSubmit} />
+							<Text style={{ textAlign: 'center', color: 'red' }}>
+								{formikProps.errors.general}
+							</Text>
+						</Fragment>
 					)}
 				</Fragment>
 			)}
