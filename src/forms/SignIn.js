@@ -1,15 +1,9 @@
 import React, { Fragment } from 'react';
-import {
-	StyleSheet,
-	SafeAreaView,
-	ActivityIndicator,
-	View,
-	TextInput,
-	Text,
-	Button
-} from 'react-native';
+import { SafeAreaView, ActivityIndicator, Button } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+
+import InputField from './components/InputField';
 
 const validateSchema = yup.object().shape({
 	email: yup
@@ -38,33 +32,22 @@ export default () => (
 		>
 			{formikProps => (
 				<Fragment>
-					<View style={styles.formItem}>
-						<Text accessibilityLabel="Email">Email</Text>
-						<TextInput
-							style={styles.inputField}
-							placeholder="email@example.com"
-							onChangeText={formikProps.handleChange('email')}
-							onBlur={formikProps.handleBlur('email')}
-							autoFocus
-						/>
-						<Text style={styles.errorText}>
-							{formikProps.touched.email && formikProps.errors.email}
-						</Text>
-					</View>
+					<InputField
+						label="Email"
+						formikProps={formikProps}
+						formikKey="email"
+						placeholder="email@example.com"
+						autoFocus
+					/>
 
-					<View style={styles.formItem}>
-						<Text accessibilityLabel="Password">Password</Text>
-						<TextInput
-							style={styles.inputField}
-							placeholder="password"
-							onChangeText={formikProps.handleChange('password')}
-							onBlur={formikProps.handleBlur('password')}
-							secureTextEntry
-						/>
-						<Text style={styles.errorText}>
-							{formikProps.touched.password && formikProps.errors.password}
-						</Text>
-					</View>
+					<InputField
+						label="Password"
+						formikProps={formikProps}
+						formikKey="password"
+						placeholder="password"
+						secureTextEntry
+					/>
+
 					{formikProps.isSubmitting ? (
 						<ActivityIndicator />
 					) : (
@@ -75,18 +58,3 @@ export default () => (
 		</Formik>
 	</SafeAreaView>
 );
-
-const styles = StyleSheet.create({
-	inputField: {
-		borderWidth: 2,
-		margin: 10,
-		padding: 5
-	},
-	formItem: {
-		marginHorizontal: 20,
-		marginVertical: 5
-	},
-	errorText: {
-		color: 'red'
-	}
-});
