@@ -18,6 +18,11 @@ export default StyleSheet.create({
 		padding: 5,
 		backgroundColor: DarkOliveGreen
 	},
+	subNavItem__active: {
+		margin: 2,
+		padding: 5,
+		backgroundColor: 'red'
+	},
 	item: {
 		color: 'white',
 		fontSize: 18,
