@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Switch } from 'react-native';
 
 const InputField = ({ label, formikProps, formikKey, ...rest }) => {
 	const inputField = {
@@ -28,6 +28,22 @@ const InputField = ({ label, formikProps, formikKey, ...rest }) => {
 	);
 };
 
+const SwitchField = ({ label, formikProps, formikKey, ...rest }) => (
+	<View style={styles.formItem}>
+		<Text accessibilityLabel={label}>{label}</Text>
+		<Switch
+			value={formikProps.values[formikKey]}
+			onValueChange={value => {
+				formikProps.setFieldValue(formikKey, value);
+			}}
+			{...rest}
+		/>
+		<Text style={styles.errorText}>
+			{formikProps.touched[formikKey] && formikProps.errors[formikKey]}
+		</Text>
+	</View>
+);
+
 const styles = StyleSheet.create({
 	formItem: {
 		marginHorizontal: 20,
@@ -38,4 +54,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default InputField;
+export { InputField, SwitchField };
