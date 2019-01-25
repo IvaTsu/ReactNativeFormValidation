@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, Switch } from 'react-native';
+import { TextInput, Switch } from 'react-native';
+
+import FieldWrapper from './FieldWrapper';
 
 const InputField = ({ label, formikProps, formikKey, ...rest }) => {
 	const inputField = {
@@ -13,24 +15,19 @@ const InputField = ({ label, formikProps, formikKey, ...rest }) => {
 	}
 
 	return (
-		<View style={styles.formItem}>
-			<Text accessibilityLabel={label}>{label}</Text>
+		<FieldWrapper label={label} formikProps={formikProps} formikKey={formikKey}>
 			<TextInput
 				onChangeText={formikProps.handleChange(formikKey)}
 				onBlur={formikProps.handleBlur(formikKey)}
 				style={inputField}
 				{...rest}
 			/>
-			<Text style={styles.errorText}>
-				{formikProps.touched[formikKey] && formikProps.errors[formikKey]}
-			</Text>
-		</View>
+		</FieldWrapper>
 	);
 };
 
 const SwitchField = ({ label, formikProps, formikKey, ...rest }) => (
-	<View style={styles.formItem}>
-		<Text accessibilityLabel={label}>{label}</Text>
+	<FieldWrapper label={label} formikProps={formikProps} formikKey={formikKey}>
 		<Switch
 			value={formikProps.values[formikKey]}
 			onValueChange={value => {
@@ -38,20 +35,7 @@ const SwitchField = ({ label, formikProps, formikKey, ...rest }) => (
 			}}
 			{...rest}
 		/>
-		<Text style={styles.errorText}>
-			{formikProps.touched[formikKey] && formikProps.errors[formikKey]}
-		</Text>
-	</View>
+	</FieldWrapper>
 );
-
-const styles = StyleSheet.create({
-	formItem: {
-		marginHorizontal: 20,
-		marginVertical: 5
-	},
-	errorText: {
-		color: 'red'
-	}
-});
 
 export { InputField, SwitchField };
