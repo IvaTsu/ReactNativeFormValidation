@@ -3,7 +3,7 @@ import { SafeAreaView, ActivityIndicator, Button } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
-import { InputField } from './components/InputFields';
+import { InputField, SwitchField } from './components/InputFields';
 
 const validateSchema = yup.object().shape({
 	email: yup
@@ -15,7 +15,11 @@ const validateSchema = yup.object().shape({
 		.string()
 		.label('Password')
 		.required()
-		.min(8, 'The lenght should be > 8')
+		.min(8, 'The lenght should be > 8'),
+	agreeToTermsAndConditions: yup
+		.boolean()
+		.label('Agree to Terms and Conditions')
+		.test('is-true', 'Must agree with Terms', value => value === true)
 });
 
 export default () => (
@@ -48,10 +52,16 @@ export default () => (
 						secureTextEntry
 					/>
 
+					<SwitchField
+						label="Agree to Terms and Conditions"
+						formikProps={formikProps}
+						formikKey="agreeToTermsAndConditions"
+					/>
+
 					{formikProps.isSubmitting ? (
 						<ActivityIndicator />
 					) : (
-						<Button title="Sign In" onPress={formikProps.handleSubmit} />
+						<Button title="Sign Up" onPress={formikProps.handleSubmit} />
 					)}
 				</Fragment>
 			)}

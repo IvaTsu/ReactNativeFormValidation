@@ -3,7 +3,7 @@ import { SafeAreaView, Button, ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
-import { InputField } from './../components/InputFields';
+import { InputField } from './components/InputFields';
 
 const validationSchema = yup.object().shape({
 	name: yup
